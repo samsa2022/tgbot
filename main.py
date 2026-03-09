@@ -9,12 +9,26 @@ TOKEN = '8544193969:AAE70uodbN_N549epKi5_DDXYD8lCvDNIro'
 # Создаем экземпляр бота
 bot = telebot.TeleBot(TOKEN)
 
+facts = [
+    'Осьминоги имеют три сердца.',
+    'Мёд никогда не портится — его находили в египетских пирамидах.',
+    'Бананы слегка радиоактивны.',
+    'Улитки могут спать до 3 лет.',
+    'Молния бьёт в Землю около 100 раз в секунду.',
+]
+
 # Обработчик команды /start
 @bot.message_handler(commands=['start'])
 def start(message):
-   text = 'Hello'
-   # Отправляем сообщение text пользователю
-   bot.send_message(message.chat.id, text)
+    bot.send_message(message.chat.id, 'Привет!\nНапиши /random_fact чтобы узнать интересный факт.\n/add_meme чтобы добавить мем'
+                                      '\n/meme чтобы посмотреть случайный мем'
+                                      '\nПриятного пользования!')
+
+@bot.message_handler(commands=['random_fact'])
+def random_fact(message):
+    fact = random.choice(facts)
+    bot.send_message(message.chat.id, fact)
+
 
 @bot.message_handler(commands=['photo'])
 def send_photo(message):
